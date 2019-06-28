@@ -15,6 +15,15 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(type(b1.created_at), datetime.datetime)
         self.assertEqual(type(b1.updated_at), datetime.datetime)
 
+    def test_different_id(self):
+        """Tests for different id"""
+        b1 = BaseModel(89)
+        self.assertNotEqual(b1.id, 89)
+        b1 = BaseModel("hello")
+        self.assertNotEqual(b1.id, "hello")
+        b1 = BaseModel([1, 2, 3])
+        self.assertNotEqual(b1.id, [1, 2, 3])
+
     def test_multipleinstancecreation(self):
         """This function tests for multiple instance creation"""
         b1 = BaseModel()
@@ -70,7 +79,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual('created_at' in dictionary, True)
         self.assertEqual('updated_at' in dictionary, True)
 
-    def test_toomanyargsforBaseModel(self):
+    def test_invalidargumentBaseModel(self):
         """This function tests exception thrown when arg passed to BaseModel"""
         with self.assertRaises(NameError) as e:
             b1 = BaseModel(hi)
@@ -103,3 +112,6 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(b1.created_at, b2.created_at)
         self.assertEqual(b1.updated_at, b2.updated_at)
         self.assertNotEqual(b1, b2)
+
+if __name__ == "__main__":
+    unittest.main()
