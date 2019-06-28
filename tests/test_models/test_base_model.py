@@ -72,9 +72,9 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_toomanyargsforBaseModel(self):
         """This function tests exception thrown when arg passed to BaseModel"""
-        with self.assertRaises(TypeError) as e:
-            b1 = BaseModel("foo")
-        self.assertEqual(str(e.exception), "__init__() takes 1 positional argument but 2 were given")
+        with self.assertRaises(NameError) as e:
+            b1 = BaseModel(hi)
+        self.assertEqual(str(e.exception), "name 'hi' is not defined")
 
     def test_toomanyargsforsave(self):
         """This function tests exception thrown when arg passed to BaseModel"""
@@ -89,3 +89,17 @@ class TestBaseModelClass(unittest.TestCase):
             b1 = BaseModel()
             b1.to_dict("foo")
         self.assertEqual(str(e.exception), "to_dict() takes 1 positional argument but 2 were given")
+
+    def test_create_from_dict(self):
+        """This function tests creating base_model from dict"""
+        b1 = BaseModel()
+        b1.name = "Holberton"
+        b1.my_number = 89
+        my_model_json = b1.to_dict()
+        b2 = BaseModel(**my_model_json)
+        self.assertEqual(b1.my_number, b2.my_number)
+        self.assertEqual(b1.id, b2.id)
+        self.assertEqual(b1.name, b2.name)
+        self.assertEqual(b1.created_at, b2.created_at)
+        self.assertEqual(b1.updated_at, b2.updated_at)
+        self.assertNotEqual(b1, b2)
