@@ -4,15 +4,18 @@ from models.base_model import BaseModel
 import datetime
 
 import unittest
+
+
 class TestBaseModelClass(unittest.TestCase):
     """This class allows for testing of BaseModel class"""
-    def testsingleinstancecreation(self):
+    def test_singleinstancecreation(self):
         """This function tests for single instance creation"""
         b1 = BaseModel()
         self.assertEqual(type(b1.id), str)
         self.assertEqual(type(b1.created_at), datetime.datetime)
         self.assertEqual(type(b1.updated_at), datetime.datetime)
-    def testmultipleinstancecreation(self):
+
+    def test_multipleinstancecreation(self):
         """This function tests for multiple instance creation"""
         b1 = BaseModel()
         self.assertEqual(type(b1.id), str)
@@ -26,23 +29,63 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(type(b3.id), str)
         self.assertEqual(type(b3.created_at), datetime.datetime)
         self.assertEqual(type(b3.updated_at), datetime.datetime)
-    def teststrmethod(self):
+        self.assertNotEqual(b1.id, b2.id, b3.id)
+
+    def test_addingnewattributes(self):
+        b1 = BaseModel()
+        b1.name = "Holberton"
+        b1.my_number = 89
+        dictionary = b1.to_dict()
+        self.assertEqual('name' in dictionary, True)
+        self.assertEqual('my_number' in dictionary, True)
+        b2 = BaseModel()
+        dictionary2 = b2.to_dict()
+        self.assertEqual('name' in dictionary2, False)
+        self.assertEqual('my_number' in dictionary2, False)
+
+    def test_strmethod(self):
         """This function tests the str method"""
         b1 = BaseModel()
         self.assertEqual(type(str(b1)), str)
-    def testsavemethod(self):
+
+    def test_savemethod(self):
         """This function tests the save method"""
         b1 = BaseModel()
         oldtime = b1.updated_at
         b1.save()
         newtime = b1.updated_at
         self.assertNotEqual(oldtime, newtime)
-    def testtodictreturntype(self):
+
+    def test_todictreturntype(self):
         """This function tests the todict method"""
         b1 = BaseModel()
         self.assertEqual(type(b1.to_dict()), dict)
-    def testthatclassattributeadded(self):
+
+    def test_thatallattributesareindict(self):
         """This function tests the todict method"""
         b1 = BaseModel()
         dictionary = b1.to_dict()
         self.assertEqual('__class__' in dictionary, True)
+        self.assertEqual('id' in dictionary, True)
+        self.assertEqual('created_at' in dictionary, True)
+        self.assertEqual('updated_at' in dictionary, True)
+
+    def test_toomanyargsforBaseModel(self):
+        """This function tests exception thrown when arg passed to BaseModel"""
+        with self.assertRaises(TypeError) as e:
+            b1 = BaseModel("foo")
+        self.assertEqual(str(e.exception), "__init__() takes 1 positional argument but 2 were given")
+
+    def test_toomanyargsforsave(self):
+        """This function tests exception thrown when arg passed to BaseModel"""
+        with self.assertRaises(TypeError) as e:
+            b1 = BaseModel()
+            b1.save("foo")
+        self.assertEqual(str(e.exception), "save() takes 1 positional argument but 2 were given")
+
+    def test_toomanyargsfortodict(self):
+        """This function tests exception thrown when arg passed to BaseModel"""
+        with self.assertRaises(TypeError) as e:
+            b1 = BaseModel()
+            b1.to_dict("foo")
+        self.assertEqual(str(e.exception), "to_dict() takes 1 positional argument but 2 were given")
