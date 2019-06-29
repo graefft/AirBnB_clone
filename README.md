@@ -21,5 +21,5 @@ Write command interpreter to manage AirBnb objects
 * How to handle named arguments in a function
 
 ### Authors
-David Kwan - [github.com/dwkwan]("https://github.com/dwkwan")
-Thomas Graeff - [github.com/graefft]("https://github.com/graefft")
+[David Kwan]("https://github.com/dwkwan")
+[Thomas Graeff]("https://github.com/graefft")
