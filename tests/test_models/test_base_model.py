@@ -11,9 +11,10 @@ class TestBaseModelClass(unittest.TestCase):
 
     def setUp(self):
         """Sets up BaseModel for testing"""
-        self.b1 = BaseModel()
-        self.b2 = BaseModel()
-        self.b3 = BaseModel()
+        pass
+        #self.b1 = BaseModel()
+        #self.b2 = BaseModel()
+        #self.b3 = BaseModel()
 
     def tearDown(self):
         """Tears down BaseModel testing"""
@@ -21,9 +22,10 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_singleinstancecreation(self):
         """This function tests for single instance creation"""
-        self.assertEqual(type(self.b1.id), str)
-        self.assertEqual(type(self.b1.created_at), datetime)
-        self.assertEqual(type(self.b1.updated_at), datetime)
+        b1 = BaseModel()
+        self.assertEqual(type(b1.id), str)
+        self.assertEqual(type(b1.created_at), datetime)
+        self.assertEqual(type(b1.updated_at), datetime)
 
     def test_different_id(self):
         """Tests for different id"""
@@ -36,17 +38,20 @@ class TestBaseModelClass(unittest.TestCase):
 
 
     def test_created_at(self):
+        pass
         """Tests created_at"""
-        self.assertEqual(type(self.b1.created_at), type(datetime.now()))
-        self.assertTrue(hasattr(self.b1, "created_at"))
+        b1 = BaseModel()
+        self.assertEqual(type(b1.created_at), type(datetime.now()))
+        self.assertTrue(hasattr(b1, "created_at"))
 
     def test_updated_at(self):
         """Tests updated_at"""
-        self.assertEqual(type(self.b1.updated_at), type(datetime.now()))
-        self.assertTrue(hasattr(self.b1, "updated_at"))
-        update = self.b1.updated_at
-        self.b1.save()
-        self.assertFalse(update == self.b1.updated_at)
+        b1 = BaseModel()
+        self.assertEqual(type(b1.updated_at), type(datetime.now()))
+        self.assertTrue(hasattr(b1, "updated_at"))
+        update = b1.updated_at
+        b1.save()
+        self.assertFalse(update == b1.updated_at)
 
     def test_multipleinstancecreation(self):
         """This function tests for multiple instance creation"""
@@ -83,10 +88,11 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_savemethod(self):
         """This function tests the save method"""
-        b1 = BaseModel()
-        oldtime = b1.updated_at
-        b1.save()
-        newtime = b1.updated_at
+        pass
+        base1 = BaseModel()
+        oldtime = base1.updated_at
+        base1.save()
+        newtime = base1.updated_at
         self.assertNotEqual(oldtime, newtime)
 
     def test_todictreturntype(self):
@@ -136,14 +142,6 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(b1.created_at, b2.created_at)
         self.assertEqual(b1.updated_at, b2.updated_at)
         self.assertNotEqual(b1, b2)
-
-    def test_storage(self):
-        """This function tests if stored correctly in __obj"""
-        obj = models.storage.all()
-        self.assertTrue(obj)
-        self.assertEqual(type(obj), dict)
-        for k, v in obj.items():
-            self.assertEqual(type(v), BaseModel)
 
 if __name__ == "__main__":
     unittest.main()
