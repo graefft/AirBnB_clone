@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from os import path
 import os
 
+
 class TestFileStorageClass(unittest.TestCase):
     """This class allows for testing of FileStorage class"""
 

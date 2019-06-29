@@ -12,9 +12,6 @@ class TestBaseModelClass(unittest.TestCase):
     def setUp(self):
         """Sets up BaseModel for testing"""
         pass
-        #self.b1 = BaseModel()
-        #self.b2 = BaseModel()
-        #self.b3 = BaseModel()
 
     def tearDown(self):
         """Tears down BaseModel testing"""
@@ -35,7 +32,6 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertNotEqual(base1.id, "hello")
         base1 = BaseModel([1, 2, 3])
         self.assertNotEqual(base1.id, [1, 2, 3])
-
 
     def test_created_at(self):
         pass
@@ -120,14 +116,16 @@ class TestBaseModelClass(unittest.TestCase):
         with self.assertRaises(TypeError) as e:
             b1 = BaseModel()
             b1.save("foo")
-        self.assertEqual(str(e.exception), "save() takes 1 positional argument but 2 were given")
+        self.assertEqual(str(e.exception), "save() takes 1 positional argument" +
+                                            " but 2 were given")
 
     def test_toomanyargsfortodict(self):
         """This function tests exception thrown when arg passed to BaseModel"""
         with self.assertRaises(TypeError) as e:
             b1 = BaseModel()
             b1.to_dict("foo")
-        self.assertEqual(str(e.exception), "to_dict() takes 1 positional argument but 2 were given")
+        self.assertEqual(str(e.exception), "to_dict() takes 1 positional" +
+                                           " argument but 2 were given")
 
     def test_create_from_dict(self):
         """This function tests creating base_model from dict"""

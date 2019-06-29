@@ -5,6 +5,7 @@ import models
 from uuid import uuid4
 from datetime import datetime
 
+
 class BaseModel:
     """A class named BaseModel
 
@@ -18,8 +19,8 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key == "updated_at" or key == "created_at":
-                    datetime_object = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                    setattr(self, key, datetime_object)
+                    dt_obj = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                    setattr(self, key, dt_obj)
                 elif key != "__class__":
                     setattr(self, key, value)
         else:
@@ -33,7 +34,7 @@ class BaseModel:
         return "[BaseModel] ({}) {}".format(self.id, self.__dict__)
 
     def save(self):
-        """updates public instance attribute updated_at with current datetime"""
+        """updates public instance attr updated_at with current datetime"""
         self.updated_at = datetime.utcnow()
         models.storage.save()
 

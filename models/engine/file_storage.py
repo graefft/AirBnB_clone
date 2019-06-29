@@ -5,6 +5,7 @@ import json
 from models.base_model import BaseModel
 from os import path
 
+
 class FileStorage:
     """A class named FileStorage
     Attributes:
