@@ -141,6 +141,9 @@ class TestBaseModelClass(unittest.TestCase):
         """This function tests if stored correctly in __obj"""
         obj = models.storage.all()
         self.assertTrue(obj)
+        self.assertEqual(type(obj), dict)
+        for k, v in obj.items():
+            self.assertEqual(type(v), BaseModel)
 
 if __name__ == "__main__":
     unittest.main()
