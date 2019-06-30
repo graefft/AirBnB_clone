@@ -3,6 +3,7 @@
 
 import json
 from models.base_model import BaseModel
+from models.user import User
 from os import path
 
 
@@ -34,10 +35,14 @@ class FileStorage:
     def reload(self):
         """deserializes the JSON file to __objects"""
         dictionaryofdictionaries = {}
+        classes = {
+                "BaseModel": BaseModel,
+                "User": User}
         try:
             with open(self.__file_path, "r") as r:
                 dictionaryofdictionaries = json.load(r)
-                for key, value in dictionaryofdictionaries.items():
-                    self.__objects[key] = BaseModel(**value)
+                for key, v in dictionaryofdictionaries.items():
+                    if v["__class__"] in classes:
+                        self.__objects[key] = classes[v["__class__"]](**v)
         except:
             pass
