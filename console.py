@@ -3,6 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -52,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
             return
         flag = 0
         for key, value in storage.all().items():
-            if key == "BaseModel.{}".format(arglist[1]):
+            if key == "{}.{}".format(arglist[0], arglist[1]):
                 print(value)
                 flag = 1
         if flag == 0:
@@ -75,7 +76,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             dictionary = storage.all()
             for key, value in dictionary.items():
-                if key == "{BaseModel}.{}".format(arglist[1]):
+                if key == "{}.{}".format(arglist[0], arglist[1]):
                     del dictionary[key]
                     storage.save()
                     break
@@ -129,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                 elif isfloat(arglist[3]) is True:
                     setattr(value, arglist[2], float(arglist[3]))
                 else:
-                    setattr(value, arglist[2], arglist[3])
+                    setattr(value, arglist[2], str(arglist[3]))
                 storage.save()
 
     def close(self):
