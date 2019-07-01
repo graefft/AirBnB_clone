@@ -152,6 +152,14 @@ class HBNBCommand(cmd.Cmd):
             self.file.close()
             self.file = None
 
+    def default(self, line):
+        '''Override syntax error message '''
+        pass
+
+    def emptyline(self):
+        """Handles empty line"""
+        pass
+
 
 def isint(string):
     """Test if string content is an int"""
