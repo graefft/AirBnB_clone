@@ -3,6 +3,11 @@
 import cmd
 import sys
 from models.base_model import BaseModel
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models.user import User
 from models import storage
 
@@ -73,14 +78,15 @@ class HBNBCommand(cmd.Cmd):
         if len(arglist) == 1:
             print("** instance id missing **")
             return
-        try:
-            dictionary = storage.all()
-            for key, value in dictionary.items():
-                if key == "{}.{}".format(arglist[0], arglist[1]):
-                    del dictionary[key]
-                    storage.save()
-                    break
-        except Exception as e:
+        flag = 0
+        dictionary = storage.all()
+        for key, value in dictionary.items():
+            if key == "{}.{}".format(arglist[0], arglist[1]):
+                del dictionary[key]
+                storage.save()
+                flag = 1
+                break
+        if flag == 0:
             print("** no instance found **")
             return
 
@@ -123,15 +129,22 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
         objectdict = storage.all()
+        flag = 0
         for key, value in objectdict.items():
             if key == "{}.{}".format(arglist[0], arglist[1]):
                 if isint(arglist[3]) is True:
                     setattr(value, arglist[2], int(arglist[3]))
+                    flag = 1
                 elif isfloat(arglist[3]) is True:
                     setattr(value, arglist[2], float(arglist[3]))
+                    flag = 1
                 else:
                     setattr(value, arglist[2], str(arglist[3]))
+                    flag = 1
                 storage.save()
+        if flag == 0:
+            print("** no instance found **")
+            return
 
     def close(self):
         """Close file"""
