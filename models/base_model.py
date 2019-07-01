@@ -44,5 +44,5 @@ class BaseModel:
         newdict = self.__dict__.copy()
         newdict['created_at'] = datetime.isoformat(newdict['created_at'])
         newdict['updated_at'] = datetime.isoformat(newdict['updated_at'])
-        newdict['__class__'] = 'BaseModel'
+        newdict['__class__'] = self.__class__.__name__
         return newdict
