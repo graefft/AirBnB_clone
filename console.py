@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """This module is the entry point of the command interpreter"""
 import cmd
+import re
 import sys
+import shlex
+from shlex import split
 from models.base_model import BaseModel
 from models.state import State
 from models.city import City
@@ -19,17 +22,15 @@ class HBNBCommand(cmd.Cmd):
     file = None
 
     def do_quit(self, arg):
-        """Quit command to exit the program"""
-        self.close()
+        """Quit command to exit the program\n"""
         return True
 
     def do_EOF(self, arg):
-        """EOF command to exit the program"""
-        self.close()
+        """EOF command to exit the program\n"""
         return True
 
     def do_create(self, arg):
-        """creates and saves new instance of BaseModel. Prints id"""
+        """creates and saves new instance of BaseModel. Prints id\n"""
         if arg == "":
             print("** class name missing **")
             return
@@ -47,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         if arg == "":
             print("** class name missing **")
             return
-        arglist = arg.split()
+        arglist = parse(arg)
         try:
             b1 = eval(arglist[0])
         except:
@@ -69,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         if arg == "":
             print("** class name missing **")
             return
-        arglist = arg.split()
+        arglist = parse(arg)
         try:
             b1 = eval(arglist[0])
         except:
@@ -110,7 +111,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
-        arglist = arg.split()
+        arglist = parse(arg)
         if len(arglist) == 0:
             print("** class name missing **")
             return
@@ -130,16 +131,24 @@ class HBNBCommand(cmd.Cmd):
             return
         objectdict = storage.all()
         flag = 0
+        argument = []
+        for word in arglist[2]:
+            argument.append(str(word))
+        arg_2 = ''.join(argument)
         for key, value in objectdict.items():
             if key == "{}.{}".format(arglist[0], arglist[1]):
                 if isint(arglist[3]) is True:
-                    setattr(value, arglist[2], int(arglist[3]))
+                    setattr(value, arg_2, int(arglist[3]))
                     flag = 1
                 elif isfloat(arglist[3]) is True:
-                    setattr(value, arglist[2], float(arglist[3]))
+                    setattr(value, arg_2, float(arglist[3]))
                     flag = 1
                 else:
-                    setattr(value, arglist[2], str(arglist[3]))
+                    argument = []
+                    for item in arglist[3]:
+                        argument.append(str(item))
+                    arg_3 = ''.join(argument)
+                    setattr(value, arg_2, arg_3)
                     flag = 1
                 storage.save()
         if flag == 0:
@@ -154,11 +163,40 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         '''Override syntax error message '''
-        pass
+        arg_dict = {
+                "all": self.do_all,
+                "create": self.do_create,
+                "destroy": self.do_destroy,
+                "show": self.do_show,
+                "update": self.do_update
+        }
+        dot = re.search(r"\.", line)
+        if dot:
+            cl_comm = [line[:dot.span()[0]], line[dot.span()[1]:]]
+            par = re.search(r"\((.*?)\)", cl_comm[1])
+            if par:
+                command = [cl_comm[1][:par.span()[0]], par.group()[1:-1]]
+                if command[0] in arg_dict.keys():
+                    call = "{} {}".format(cl_comm[0], command[1])
+                    return arg_dict[command[0]](call)
+        print("*** Unknown syntax: {}".format(line))
+        return False
 
     def emptyline(self):
         """Handles empty line"""
         pass
+
+    def preloop(self):
+        pass
+
+    def postloop(self):
+        '''Adds newline'''
+        pass
+
+
+def parse(arg):
+    '''Parses commands for interpreter'''
+    return shlex.split(arg)
 
 
 def isint(string):
