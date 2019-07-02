@@ -6,6 +6,7 @@ from datetime import datetime
 import unittest
 import os
 
+
 class TestBaseModelClass(unittest.TestCase):
     """This class allows for testing of BaseModel class"""
 
@@ -16,7 +17,6 @@ class TestBaseModelClass(unittest.TestCase):
 
         if os.path.exists("file.json"):
             os.remove("file.json")
-
 
     def tearDown(self):
         """Tears down BaseModel testing"""
