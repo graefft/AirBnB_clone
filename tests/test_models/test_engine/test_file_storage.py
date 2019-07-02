@@ -25,9 +25,11 @@ class TestFileStorageClass(unittest.TestCase):
 
     def test_all(self):
         """Tests the all method of File Storage class"""
+        self.assertTrue(models.storage.all() == {})
         b1 = BaseModel()
         b2 = BaseModel()
         b3 = BaseModel()
+        self.assertFalse(models.storage.all() == {})
         objdict = models.storage.all()
         self.assertEqual(type(objdict), dict)
         for k, v in objdict.items():
@@ -67,9 +69,12 @@ class TestFileStorageClass(unittest.TestCase):
         b2 = BaseModel()
         b3 = BaseModel()
         olddict = models.storage.all()
-        b1.save()
+        models.storage.save()
         models.storage.reset()
         models.storage.reload()
         newdict = models.storage.all()
         for key, value in olddict.items():
             self.assertTrue(key in newdict)
+
+if __name__ == "__main__":
+    unittest.main()
