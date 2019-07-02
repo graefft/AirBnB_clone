@@ -22,15 +22,15 @@ class HBNBCommand(cmd.Cmd):
     file = None
 
     def do_quit(self, arg):
-        """Quit command to exit the program\n"""
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, arg):
-        """EOF command to exit the program\n"""
+        """EOF command to exit the program"""
         return True
 
     def do_create(self, arg):
-        """creates and saves new instance of BaseModel. Prints id\n"""
+        """creates and saves new instance of BaseModel. Prints id"""
         if arg == "":
             print("** class name missing **")
             return
@@ -95,7 +95,12 @@ class HBNBCommand(cmd.Cmd):
         """Prints string rep of instances"""
         arglist = arg.split()
         if len(arglist) == 0:
-            print(storage.all())
+            objlist = []
+            objectdict = storage.all()
+            for key, value in objectdict.items():
+                objlist.append(str(value))
+            print(objlist)
+
             return
         try:
             model = eval(arglist[0])
@@ -192,7 +197,6 @@ class HBNBCommand(cmd.Cmd):
     def postloop(self):
         '''Adds newline'''
         pass
-
 
 def parse(arg):
     '''Parses commands for interpreter'''
