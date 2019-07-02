@@ -9,7 +9,7 @@ import os
 
 
 class TestFileStorageClass(unittest.TestCase):
-    """This class allows for testing of FileStorage class"""
+    """This class enables testing of FileStorage class"""
 
     def setUp(self):
         """Defines instructions that will be executed before each test"""
