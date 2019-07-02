@@ -204,6 +204,7 @@ class HBNBCommand(cmd.Cmd):
         '''Adds newline'''
         pass
 
+
 def parse(arg):
     '''Parses commands for interpreter'''
     return shlex.split(arg)

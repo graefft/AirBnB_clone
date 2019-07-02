@@ -16,9 +16,20 @@ Write command interpreter to manage AirBnb objects
 * How to write and read a JSON file
 * How to manage `datetime`
 * What is an `UUID`
-* What is `\*args` and how to use it
-* What is `\*\*kwargs` and how to use it
+* What is `*args` and how to use it
+* What is `**kwargs` and how to use it
 * How to handle named arguments in a function
+
+## Running the Tests
+To run unittests for this program, cd into root directory and run the following command:
+`python3 -m unittest discover tests`
+
+Tests can be modified in the tests/ directory
+
+## Built With
+* [Python 3.4.3](https://www.python.org/download/releases/3.0/) - Python3 Language
+* [PEP8 1.7](https://www.python.org/dev/peps/pep-0008/) - PEP8 style guide
+* [Ubuntu 14.04 LTS](http://releases.ubuntu.com/14.04/) - Compiled on
 
 ### Authors
 David Kwan - [github.com/dwkwan](https://github.com/dwkwan) <br>
