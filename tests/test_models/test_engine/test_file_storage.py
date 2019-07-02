@@ -71,7 +71,5 @@ class TestFileStorageClass(unittest.TestCase):
         models.storage.reset()
         models.storage.reload()
         newdict = models.storage.all()
-        print(olddict)
-        print(newdict)
         for key, value in olddict.items():
             self.assertTrue(key in newdict)
