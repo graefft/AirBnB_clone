@@ -17,7 +17,6 @@ class TestFileStorageClass(unittest.TestCase):
             os.remove("file.json")
         models.storage.reset()
 
-
     def tearDown(self):
         """Defines instructions that will be executed after each test"""
         if os.path.exists("file.json"):
@@ -59,8 +58,8 @@ class TestFileStorageClass(unittest.TestCase):
         b1 = BaseModel()
         b1.save()
         with open("file.json", "r", encoding='utf-8') as r:
-           content = r.read()
-        self.assertTrue("BaseModel.{}".format(b1.id) in content)
+            content = r.read()
+            self.assertTrue("BaseModel.{}".format(b1.id) in content)
 
     def test_reloadbyclearingdictionary(self):
         """Tests the reload method of File Storage class"""
