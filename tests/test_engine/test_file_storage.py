@@ -12,30 +12,20 @@ class TestFileStorageClass(unittest.TestCase):
     """This class allows for testing of FileStorage class"""
 
     def setUp(self):
-        #models.storage.__objects = {}
-        #models.storage.save()
         if os.path.exists("file.json"):
             os.remove("file.json")
-            print("Setup removed JSON")
+        models.storage.__objects = {}
 
     def tearDown(self):
-        #models.storage.__objects = {}
         if os.path.exists("file.json"):
             os.remove("file.json")
+        models.storage.__objects = {}
 
     def test_all(self):
-#        Storage = FileStorage()
-        models.storage._storage__objects = {}
-        models.storage
-        print("*******")
-        print(models.storage.all())
+        models.storage.__objects = {}
         b1 = BaseModel()
-        print(models.storage.all())
         b2 = BaseModel()
-        print(models.storage.all())
         b3 = BaseModel()
-        print(models.storage.all())
-        print("*******")
         objdict = models.storage.all()
         self.assertEqual(type(objdict), dict)
         for k, v in objdict.items():
