@@ -9,19 +9,22 @@ import os
 
 
 class TestFileStorageClass(unittest.TestCase):
-    """This class allows for testing of FileStorage class"""
+    """This class enables testing of FileStorage class"""
 
     def setUp(self):
+        """Defines instructions that will be executed before each test"""
         if os.path.exists("file.json"):
             os.remove("file.json")
         models.storage.__objects = {}
 
     def tearDown(self):
+        """Defines instructions that will be executed after each test"""
         if os.path.exists("file.json"):
             os.remove("file.json")
         models.storage.__objects = {}
 
     def test_all(self):
+        """Tests the all method of File Storage class"""
         models.storage.__objects = {}
         b1 = BaseModel()
         b2 = BaseModel()
@@ -32,7 +35,7 @@ class TestFileStorageClass(unittest.TestCase):
             self.assertEqual(type(v), BaseModel)
 
     def test_new(self):
-#        Storage = FileStorage()
+        """Tests the new method of File Storage class"""
         b1 = BaseModel()
         b2 = BaseModel()
         b3 = BaseModel()
@@ -43,14 +46,14 @@ class TestFileStorageClass(unittest.TestCase):
         self.assertFalse("BaseMod.{}".format(b3.id) in objdict)
 
     def test_save(self):
-#        Storage = FileStorage()
+        """Tests the save method of File Storage class"""
         b1 = BaseModel()
         self.assertFalse(path.exists("file.json"))
         b1.save()
         self.assertTrue(path.exists("file.json"))
 
     def test_reload(self):
-#        Storage = FileStorage()
+        """Tests the reload method of File Storage class"""
         b1 = BaseModel()
         b2 = BaseModel()
         b3 = BaseModel()
