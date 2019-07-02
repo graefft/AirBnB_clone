@@ -122,6 +122,15 @@ class HBNBCommand(cmd.Cmd):
         if len(arglist) == 1:
             print("** instance id missing **")
             return
+        objectdict = storage.all()
+        flag = 0
+        for key, value in objectdict.items():
+            if key == "{}.{}".format(arglist[0], arglist[1]):
+                flag = 1
+        if flag == 0:
+            print("** no instance found **")
+            return
+
         if len(arglist) == 2:
             print("** attribute name missing **")
             return
@@ -129,22 +138,15 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
         objectdict = storage.all()
-        flag = 0
         for key, value in objectdict.items():
             if key == "{}.{}".format(arglist[0], arglist[1]):
                 if isint(arglist[3]) is True:
                     setattr(value, arglist[2], int(arglist[3]))
-                    flag = 1
                 elif isfloat(arglist[3]) is True:
                     setattr(value, arglist[2], float(arglist[3]))
-                    flag = 1
                 else:
                     setattr(value, arglist[2], str(arglist[3]))
-                    flag = 1
                 storage.save()
-        if flag == 0:
-            print("** no instance found **")
-            return
 
     def close(self):
         """Close file"""

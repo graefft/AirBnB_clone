@@ -4,18 +4,24 @@ from models.base_model import BaseModel
 import models
 from datetime import datetime
 import unittest
-
+import os
 
 class TestBaseModelClass(unittest.TestCase):
     """This class allows for testing of BaseModel class"""
 
     def setUp(self):
         """Sets up BaseModel for testing"""
+
         self.base1 = BaseModel()
+
+        if os.path.exists("file.json"):
+            os.remove("file.json")
+
 
     def tearDown(self):
         """Tears down BaseModel testing"""
-        pass
+        if os.path.exists("file.json"):
+            os.remove("file.json")
 
     def test_singleinstancecreation(self):
         """This function tests for single instance creation"""
@@ -150,8 +156,14 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_int_to_save(self):
         '''This function tests int passed to save'''
+
         with self.assertRaises(TypeError) as e:
             self.base1.save(89)
+
+        b1 = BaseModel()
+        with self.assertRaises(TypeError) as e:
+            b1.save(89)
+
         self.assertEqual(str(e.exception), "save() takes 1 positional" +
                                            " argument but 2 were given")
 
