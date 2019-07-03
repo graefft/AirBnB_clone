@@ -4,6 +4,7 @@ import cmd
 import re
 import sys
 import shlex
+from itertools import count
 from shlex import split
 from models.base_model import BaseModel
 from models.state import State
@@ -100,7 +101,6 @@ class HBNBCommand(cmd.Cmd):
             for key, value in objectdict.items():
                 objlist.append(str(value))
             print(objlist)
-
             return
         try:
             model = eval(arglist[0])
@@ -166,6 +166,24 @@ class HBNBCommand(cmd.Cmd):
                     flag = 1
                 storage.save()
 
+    def do_count(self, arg):
+        '''Counts number of instances in a class'''
+        if arg == "":
+            print("** class name missing **")
+            return
+        arglist = parse(arg)
+        try:
+            b1 = eval(arglist[0])
+        except:
+            print("** class doesn't exist **")
+            return
+        objdict = storage.all()
+        count = 0
+        for key, value in objdict.items():
+            if objdict[key].__class__.__name__ == arglist[0]:
+                count += 1
+        print(count)
+
     def close(self):
         """Close file"""
         if self.file:
@@ -175,11 +193,12 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         '''Override syntax error message '''
         arg_dict = {
-                "all": self.do_all,
-                "create": self.do_create,
-                "destroy": self.do_destroy,
-                "show": self.do_show,
-                "update": self.do_update
+            "all": self.do_all,
+            "count": self.do_count,
+            "create": self.do_create,
+            "destroy": self.do_destroy,
+            "show": self.do_show,
+            "update": self.do_update
         }
         dot = re.search(r"\.", line)
         if dot:

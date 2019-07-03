@@ -6,17 +6,15 @@ from datetime import datetime
 import unittest
 import os
 
+
 class TestBaseModelClass(unittest.TestCase):
     """This class allows for testing of BaseModel class"""
 
     def setUp(self):
         """Sets up BaseModel for testing"""
-
         self.base1 = BaseModel()
-
         if os.path.exists("file.json"):
             os.remove("file.json")
-
 
     def tearDown(self):
         """Tears down BaseModel testing"""
@@ -72,6 +70,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertNotEqual(b1.id, b2.id, b3.id)
 
     def test_addingnewattributes(self):
+        """This function tests for adding new attributes"""
         b1 = BaseModel()
         b1.name = "Holberton"
         b1.my_number = 89
