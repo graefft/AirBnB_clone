@@ -28,6 +28,7 @@ class TestFileStorageClass(unittest.TestCase):
         Storage = FileStorage()
         self.assertTrue(type(Storage) == FileStorage)
         self.assertTrue(isinstance(Storage, FileStorage))
+        Storage.reset()
 
     def test_privateclassvariableStorage(self):
         """Test that instance of FileStorage is properly created"""
@@ -36,6 +37,7 @@ class TestFileStorageClass(unittest.TestCase):
             print(Storage.objects)
         self.assertEqual(str(e.exception),
                          "'FileStorage' object has no attribute 'objects'")
+        Storage.reset()
 
     def test_privateclassvariablefilepath(self):
         """Test that instance of FileStorage is properly created"""
@@ -44,28 +46,32 @@ class TestFileStorageClass(unittest.TestCase):
             print(Storage.file_path)
         self.assertEqual(str(e.exception),
                          "'FileStorage' object has no attribute 'file_path'")
+        Storage.reset()
 
     def test_all(self):
         """Tests the all method of File Storage class"""
-        self.assertTrue(models.storage.all() == {})
-        b1 = BaseModel()
-        b2 = BaseModel()
-        b3 = BaseModel()
-        self.assertFalse(models.storage.all() == {})
-        objdict = models.storage.all()
+        Storage = FileStorage()
+        Storage.reset()
+        self.assertTrue(Storage.all() == {})
+        Storage.new(BaseModel())
+        self.assertFalse(Storage.all() == {})
+        objdict = Storage.all()
         self.assertEqual(type(objdict), dict)
         for k, v in objdict.items():
             self.assertEqual(type(v), BaseModel)
-        self.assertTrue("BaseModel.{}".format(b1.id) in objdict)
-        self.assertTrue("BaseModel.{}".format(b2.id) in objdict)
-        self.assertTrue("BaseModel.{}".format(b3.id) in objdict)
+        Storage.reset()
 
     def test_new(self):
         """Tests the new method of File Storage class"""
+        Storage = FileStorage()
+        Storage.reset()
         b1 = BaseModel()
         b2 = BaseModel()
         b3 = BaseModel()
-        objdict = models.storage.all()
+        Storage.new(b1)
+        Storage.new(b2)
+        Storage.new(b3)
+        objdict = Storage.all()
         self.assertTrue("BaseModel.{}".format(b1.id) in objdict)
         self.assertTrue("BaseModel.{}".format(b2.id) in objdict)
         self.assertTrue("BaseModel.{}".format(b3.id) in objdict)
@@ -73,29 +79,40 @@ class TestFileStorageClass(unittest.TestCase):
 
     def test_save(self):
         """Tests the save method of File Storage class"""
+        Storage = FileStorage()
+        Storage.reset()
         b1 = BaseModel()
+        Storage.new(b1)
         self.assertFalse(path.exists("file.json"))
-        b1.save()
+        Storage.save()
         self.assertTrue(path.exists("file.json"))
 
     def test_savebyreadingfile(self):
         """Tests the save method by reading file"""
+        Storage = FileStorage()
+        Storage.reset()
         b1 = BaseModel()
-        b1.save()
+        Storage.new(b1)
+        Storage.save()
         with open("file.json", "r", encoding='utf-8') as r:
             content = r.read()
             self.assertTrue("BaseModel.{}".format(b1.id) in content)
 
     def test_reloadbyclearingdictionary(self):
         """Tests the reload method of File Storage class"""
+        Storage = FileStorage()
+        Storage.reset()
         b1 = BaseModel()
         b2 = BaseModel()
         b3 = BaseModel()
-        olddict = models.storage.all()
-        models.storage.save()
-        models.storage.reset()
-        models.storage.reload()
-        newdict = models.storage.all()
+        Storage.new(b1)
+        Storage.new(b2)
+        Storage.new(b3)
+        olddict = Storage.all()
+        Storage.save()
+        Storage.reset()
+        Storage.reload()
+        newdict = Storage.all()
         for key, value in olddict.items():
             self.assertTrue(key in newdict)
 
