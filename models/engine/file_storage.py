@@ -56,3 +56,7 @@ class FileStorage:
                         self.__objects[key] = classes[v["__class__"]](**v)
         except:
             pass
+
+    def reset(self):
+        """Resets objects dict to empty dictionary"""
+        self.__objects = {}

@@ -29,6 +29,22 @@ class TestFileStorageClass(unittest.TestCase):
         self.assertTrue(type(Storage) == FileStorage)
         self.assertTrue(isinstance(Storage, FileStorage))
 
+    def test_privateclassvariableStorage(self):
+        """Test that instance of FileStorage is properly created"""
+        Storage = FileStorage()
+        with self.assertRaises(AttributeError) as e:
+            print(Storage.objects)
+        self.assertEqual(str(e.exception),
+                         "'FileStorage' object has no attribute 'objects'")
+
+    def test_privateclassvariablefilepath(self):
+        """Test that instance of FileStorage is properly created"""
+        Storage = FileStorage()
+        with self.assertRaises(AttributeError) as e:
+            print(Storage.file_path)
+        self.assertEqual(str(e.exception),
+                         "'FileStorage' object has no attribute 'file_path'")
+
     def test_all(self):
         """Tests the all method of File Storage class"""
         self.assertTrue(models.storage.all() == {})
