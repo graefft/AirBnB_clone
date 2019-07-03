@@ -5,6 +5,7 @@ import models
 from datetime import datetime
 import unittest
 import os
+from time import sleep
 
 
 class TestBaseModelClass(unittest.TestCase):
@@ -119,6 +120,7 @@ class TestBaseModelClass(unittest.TestCase):
         """This function tests the save method"""
         base1 = BaseModel()
         oldtime = base1.updated_at
+        sleep(.5)
         base1.save()
         newtime = base1.updated_at
         self.assertNotEqual(oldtime, newtime)
