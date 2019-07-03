@@ -44,6 +44,13 @@ class TestFileStorageClass(unittest.TestCase):
                              "'FileStorage' object has no" +
                              " attribute 'file_path'")
 
+    def test_attributes(self):
+        '''Tests storage for attributes'''
+        Storage = FileStorage()
+        Storage.reset()
+        self.assertTrue(hasattr(FileStorage, "_FileStorage__file_path"))
+        self.assertTrue(hasattr(FileStorage, "_FileStorage__objects"))
+
     def test_storage_id(self):
         '''Tests id for Storage'''
         b1 = BaseModel()
@@ -79,7 +86,7 @@ class TestFileStorageClass(unittest.TestCase):
         with self.assertRaises(NameError):
             fs.new(BadModel())
 
-    def test_new_bad_type(self):
+    def test_new_bad_int(self):
         '''Tests if passing int to new'''
         fs = FileStorage()
         with self.assertRaises(AttributeError):
@@ -90,6 +97,12 @@ class TestFileStorageClass(unittest.TestCase):
         fs = FileStorage()
         with self.assertRaises(AttributeError):
             fs.new(5.5)
+
+    def test_new_bad_string(self):
+        '''Tests if passing string to new'''
+        fs = FileStorage()
+        with self.assertRaises(AttributeError):
+            fs.new("hello")
 
     def test_save(self):
         """Tests the save method of File Storage class"""
@@ -117,11 +130,7 @@ class TestFileStorageClass(unittest.TestCase):
         Storage = FileStorage()
         Storage.reset()
         b1 = BaseModel()
-        b2 = BaseModel()
-        b3 = BaseModel()
         Storage.new(b1)
-        Storage.new(b2)
-        Storage.new(b3)
         olddict = Storage.all()
         Storage.save()
         Storage.reset()
@@ -134,6 +143,16 @@ class TestFileStorageClass(unittest.TestCase):
         newdict = models.storage.all()
         for key, value in olddict.items():
             self.assertTrue(key in newdict)
+
+    def reload_2(self):
+        '''Tests reload normal'''
+        Storage = FileStorage()
+        b1 = BaseMode()
+        Storage.new(b1)
+        Storage.save()
+        Storage.reset()
+        Storage.reload()
+        self.assertTrue(Storage.all()[BaseModel.b.id])
 
 if __name__ == "__main__":
     unittest.main()
