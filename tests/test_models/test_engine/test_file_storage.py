@@ -13,9 +13,7 @@ class TestFileStorageClass(unittest.TestCase):
 
     def setUp(self):
         """Defines instructions that will be executed before each test"""
-        if os.path.exists("file.json"):
-            os.remove("file.json")
-        models.storage.reset()
+        pass
 
     def tearDown(self):
         """Defines instructions that will be executed after each test"""
@@ -34,48 +32,64 @@ class TestFileStorageClass(unittest.TestCase):
         """Test that instance of FileStorage is properly created"""
         Storage = FileStorage()
         with self.assertRaises(AttributeError) as e:
-            print(Storage.objects)
-        self.assertEqual(str(e.exception),
-                         "'FileStorage' object has no attribute 'objects'")
-        Storage.reset()
+            self.assertEqual(str(e.exception),
+                             "'FileStorage' object has no" +
+                             " attribute 'objects'")
 
     def test_privateclassvariablefilepath(self):
         """Test that instance of FileStorage is properly created"""
         Storage = FileStorage()
         with self.assertRaises(AttributeError) as e:
-            print(Storage.file_path)
-        self.assertEqual(str(e.exception),
-                         "'FileStorage' object has no attribute 'file_path'")
-        Storage.reset()
+            self.assertEqual(str(e.exception),
+                             "'FileStorage' object has no" +
+                             " attribute 'file_path'")
+
+    def test_storage_id(self):
+        '''Tests id for Storage'''
+        b1 = BaseModel()
+        self.assertTrue(hasattr(b1, "id"))
+        self.assertEqual(type(b1.id), str)
+
+    def test_storage_all_return(self):
+        '''Tests that all returns dict'''
+        fs = FileStorage()
+        self.assertEqual(type(fs.all()), dict)
 
     def test_all(self):
         """Tests the all method of File Storage class"""
-        Storage = FileStorage()
-        Storage.reset()
-        self.assertTrue(Storage.all() == {})
-        Storage.new(BaseModel())
-        self.assertFalse(Storage.all() == {})
-        objdict = Storage.all()
-        self.assertEqual(type(objdict), dict)
-        for k, v in objdict.items():
-            self.assertEqual(type(v), BaseModel)
-        Storage.reset()
-
-    def test_new(self):
-        """Tests the new method of File Storage class"""
-        Storage = FileStorage()
-        Storage.reset()
         b1 = BaseModel()
         b2 = BaseModel()
         b3 = BaseModel()
-        Storage.new(b1)
-        Storage.new(b2)
-        Storage.new(b3)
-        objdict = Storage.all()
+        self.assertFalse(models.storage.all() == {})
+        objdict = models.storage.all()
+        self.assertEqual(type(objdict), dict)
         self.assertTrue("BaseModel.{}".format(b1.id) in objdict)
         self.assertTrue("BaseModel.{}".format(b2.id) in objdict)
         self.assertTrue("BaseModel.{}".format(b3.id) in objdict)
-        self.assertFalse("BaseMod.{}".format(b3.id) in objdict)
+
+    def test_new(self):
+        """Tests the new method of File Storage class"""
+        fs = FileStorage()
+        fs.new(BaseModel())
+        self.assertTrue(fs.all())
+
+    def test_new_bad(self):
+        '''Tests if passing bad argument to new'''
+        fs = FileStorage()
+        with self.assertRaises(NameError):
+            fs.new(BadModel())
+
+    def test_new_bad_type(self):
+        '''Tests if passing int to new'''
+        fs = FileStorage()
+        with self.assertRaises(AttributeError):
+            fs.new(927)
+
+    def test_new_bad_float(self):
+        '''Tests if passing float to new'''
+        fs = FileStorage()
+        with self.assertRaises(AttributeError):
+            fs.new(5.5)
 
     def test_save(self):
         """Tests the save method of File Storage class"""
@@ -113,6 +127,11 @@ class TestFileStorageClass(unittest.TestCase):
         Storage.reset()
         Storage.reload()
         newdict = Storage.all()
+        olddict = models.storage.all()
+        models.storage.save()
+        models.storage.reset()
+        models.storage.reload()
+        newdict = models.storage.all()
         for key, value in olddict.items():
             self.assertTrue(key in newdict)
 
