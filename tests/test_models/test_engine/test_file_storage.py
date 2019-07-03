@@ -23,6 +23,12 @@ class TestFileStorageClass(unittest.TestCase):
             os.remove("file.json")
         models.storage.reset()
 
+    def test_instancecreation(self):
+        """Test that instance of FileStorage is properly created"""
+        Storage = FileStorage()
+        self.assertTrue(type(Storage) == FileStorage)
+        self.assertTrue(isinstance(Storage, FileStorage))
+
     def test_all(self):
         """Tests the all method of File Storage class"""
         self.assertTrue(models.storage.all() == {})
@@ -57,6 +63,7 @@ class TestFileStorageClass(unittest.TestCase):
         self.assertTrue(path.exists("file.json"))
 
     def test_savebyreadingfile(self):
+        """Tests the save method by reading file"""
         b1 = BaseModel()
         b1.save()
         with open("file.json", "r", encoding='utf-8') as r:
