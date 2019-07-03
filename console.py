@@ -51,7 +51,7 @@ class HBNBCommand(cmd.Cmd):
             return
         arglist = parse(arg)
         try:
-            b1 = eval(arglist[0])
+            b1 = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -73,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
             return
         arglist = parse(arg)
         try:
-            b1 = eval(arglist[0])
+            b1 = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -103,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
             print(objlist)
             return
         try:
-            model = eval(arglist[0])
+            model = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            model = eval(arglist[0])
+            model = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -136,7 +136,6 @@ class HBNBCommand(cmd.Cmd):
         if flag == 0:
             print("** no instance found **")
             return
-
         if len(arglist) == 2:
             print("** attribute name missing **")
             return
@@ -146,23 +145,20 @@ class HBNBCommand(cmd.Cmd):
         objectdict = storage.all()
         flag = 0
         argument = []
-        for word in arglist[2]:
-            argument.append(str(word))
-        arg_2 = ''.join(argument)
         for key, value in objectdict.items():
             if key == "{}.{}".format(arglist[0], arglist[1]):
                 if isint(arglist[3]) is True:
-                    setattr(value, arg_2, int(arglist[3]))
+                    setattr(value, arglist[2], int(arglist[3]))
                     flag = 1
                 elif isfloat(arglist[3]) is True:
-                    setattr(value, arg_2, float(arglist[3]))
+                    setattr(value, arglist[2], float(arglist[3]))
                     flag = 1
                 else:
                     argument = []
                     for item in arglist[3]:
                         argument.append(str(item))
                     arg_3 = ''.join(argument)
-                    setattr(value, arg_2, arg_3)
+                    setattr(value, arglist[2], arg_3)
                     flag = 1
                 storage.save()
 
@@ -173,7 +169,7 @@ class HBNBCommand(cmd.Cmd):
             return
         arglist = parse(arg)
         try:
-            b1 = eval(arglist[0])
+            b1 = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
