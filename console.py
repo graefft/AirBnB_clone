@@ -206,7 +206,11 @@ class HBNBCommand(cmd.Cmd):
             par = re.search(r"\((.*?)\)", cl_comm[1])
             if par:
                 command = [cl_comm[1][:par.span()[0]], par.group()[1:-1]]
-                if command[0] in arg_dict.keys():
+                if command[0] == "update":
+                    no_comma = command[1].replace(",", "")
+                    call = "{} {}".format(cl_comm[0], no_comma)
+                    return arg_dict[command[0]](call)
+                elif command[0] in arg_dict.keys():
                     call = "{} {}".format(cl_comm[0], command[1])
                     return arg_dict[command[0]](call)
         print("*** Unknown syntax: {}".format(line))
