@@ -6,6 +6,7 @@ import unittest
 from models.base_model import BaseModel
 from os import path
 import os
+from datetime import datetime
 
 
 class TestFileStorageClass(unittest.TestCase):
@@ -13,13 +14,12 @@ class TestFileStorageClass(unittest.TestCase):
 
     def setUp(self):
         """Defines instructions that will be executed before each test"""
-        if os.path.exists("file.json"):
-            os.remove("file.json")
+        pass
 
     def tearDown(self):
         """Defines instructions that will be executed after each test"""
         if os.path.exists("file.json"):
-            os.remove("file.json")
+            os.rename("file.json", "foo")
 
     def test_instancecreation(self):
         """Test that instance of FileStorage is properly created"""
@@ -167,6 +167,30 @@ class TestFileStorageClass(unittest.TestCase):
         Storage.reload()
         objdict_resave = Storage.all()
         self.assertTrue(objdict == objdict_resave)
+
+    def test_reload_update_and_create(self):
+        '''Tests if updated and created are the same'''
+        f1 = FileStorage()
+        b1 = BaseModel()
+        f1.new(b1)
+        all_objs = f1.all()
+        for key, value in all_objs.items():
+            if key == "BaseModel.{}".format(b1.id):
+                self.assertFalse(value.created_at == value.updated_at)
+
+    def test_json_reload_times(self):
+        '''Tests updated and created are same for json'''
+        f1 = FileStorage()
+        b1 = BaseModel()
+        f1.reset()
+        f1.new(b1)
+        bcreate = datetime.isoformat(b1.created_at)
+        bupdate = datetime.isoformat(b1.updated_at)
+        f1.save()
+        with open("file.json", "r", encoding='utf-8') as f:
+            content = f.read()
+            self.assertTrue(bcreate in content)
+            self.assertTrue(bupdate in content)
 
 if __name__ == "__main__":
     unittest.main()
