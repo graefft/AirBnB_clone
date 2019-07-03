@@ -144,7 +144,6 @@ class HBNBCommand(cmd.Cmd):
             return
         objectdict = storage.all()
         flag = 0
-        argument = []
         for key, value in objectdict.items():
             if key == "{}.{}".format(arglist[0], arglist[1]):
                 if isint(arglist[3]) is True:
@@ -154,13 +153,9 @@ class HBNBCommand(cmd.Cmd):
                     setattr(value, arglist[2], float(arglist[3]))
                     flag = 1
                 else:
-                    argument = []
-                    for item in arglist[3]:
-                        argument.append(str(item))
-                    arg_3 = ''.join(argument)
-                    setattr(value, arglist[2], arg_3)
+                    setattr(value, arglist[2], arglist[3])
                     flag = 1
-                storage.save()
+        storage.save()
 
     def do_count(self, arg):
         '''Counts number of instances in a class'''
