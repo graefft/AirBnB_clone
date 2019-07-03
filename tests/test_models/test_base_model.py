@@ -13,8 +13,6 @@ class TestBaseModelClass(unittest.TestCase):
     def setUp(self):
         """Sets up BaseModel for testing"""
         self.base1 = BaseModel()
-        if os.path.exists("file.json"):
-            os.remove("file.json")
 
     def tearDown(self):
         """Tears down BaseModel testing"""
@@ -187,6 +185,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(b1.created_at, b2.created_at)
         self.assertEqual(b1.updated_at, b2.updated_at)
         self.assertNotEqual(b1, b2)
+
 
 if __name__ == "__main__":
     unittest.main()
