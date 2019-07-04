@@ -16,7 +16,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.base1 = BaseModel()
 
     def tearDown(self):
-        """Tears down BaseModel testing"""
+        """Tears down BaseModel testing by removing file"""
         if os.path.exists("file.json"):
             os.remove("file.json")
 
