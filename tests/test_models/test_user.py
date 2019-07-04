@@ -10,7 +10,7 @@ class TestUserClass(unittest.TestCase):
         '''This class allows for testing of User class'''
 
         def setUp(self):
-                '''Sets up User for testing'''
+                '''Sets up User instance for testing'''
                 self.user1 = User()
 
         def tearDown(self):
@@ -22,7 +22,7 @@ class TestUserClass(unittest.TestCase):
                 self.assertEqual(type(self.user1), User)
 
         def test_instance(self):
-                '''Tests if instance of BaseModel'''
+                '''Tests if instance inherits from BaseModel'''
                 self.assertIsInstance(self.user1, BaseModel)
 
         def test_user_id(self):
