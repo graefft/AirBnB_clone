@@ -10,7 +10,7 @@ class TestCityClass(unittest.TestCase):
         '''This class allows for testing of City class'''
 
         def setUp(self):
-                '''Sets up City for testing'''
+                '''Sets up City instance for testing'''
                 self.city1 = City()
 
         def tearDown(self):
