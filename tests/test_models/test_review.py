@@ -22,7 +22,7 @@ class TestreviewClass(unittest.TestCase):
                 self.assertEqual(type(self.review1), Review)
 
         def test_instance(self):
-                '''Tests if instance of BaseModel'''
+                '''Tests if instance inherits from BaseModel'''
                 self.assertIsInstance(self.review1, BaseModel)
 
         def test_review_id(self):
