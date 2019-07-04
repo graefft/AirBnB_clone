@@ -10,7 +10,7 @@ class TestreviewClass(unittest.TestCase):
         '''This class allows for testing of review class'''
 
         def setUp(self):
-                '''Sets up review for testing'''
+                '''Sets up Review instance for testing'''
                 self.review1 = Review()
 
         def tearDown(self):
