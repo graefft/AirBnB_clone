@@ -4,6 +4,12 @@ from models.engine.file_storage import FileStorage
 import models
 import unittest
 from models.base_model import BaseModel
+from models.city import City
+from models.user import User
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from os import path
 import os
 from datetime import datetime
@@ -191,6 +197,36 @@ class TestFileStorageClass(unittest.TestCase):
             content = f.read()
             self.assertTrue(bcreate in content)
             self.assertTrue(bupdate in content)
+    
+    def test_reload_3(self):
+        '''Tests reload again'''
+        FileStorage().reset()
+        b1 = BaseModel()
+        u1 = User()
+        c1 = City()
+        s1 = State()
+        a1 = Amenity()
+        p1 = Place()
+        r1 = Review()
+        FileStorage().save()
+        FileStorage._FileStorage__objects = {}
+        FileStorage().reload()
+        fso = FileStorage._FileStorage__objects
+        bid = "BaseModel." + b1.id
+        cid = "City." + c1.id
+        uid = "User." + u1.id
+        sid = "State." + s1.id
+        aid = "Amenity." + a1.id
+        pid = "Place." + p1.id
+        rid = "Review." + r1.id
+        self.assertIn(bid, fso)
+        self.assertIn(cid, fso)
+        self.assertIn(uid, fso)
+        self.assertIn(sid, fso)
+        self.assertIn(aid, fso)
+        self.assertIn(pid, fso)
+        self.assertIn(rid, fso)
+
 
 if __name__ == "__main__":
     unittest.main()
