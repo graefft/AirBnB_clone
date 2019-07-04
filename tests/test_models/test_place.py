@@ -18,11 +18,11 @@ class TestplaceClass(unittest.TestCase):
                 pass
 
         def test_type(self):
-                '''Tests type of place'''
+                '''Tests type of Place instance'''
                 self.assertEqual(type(self.place1), Place)
 
         def test_instance(self):
-                '''Tests if instance of BaseModel'''
+                '''Tests if instance instance inherits from BaseModel'''
                 self.assertIsInstance(self.place1, BaseModel)
 
         def test_place_id(self):
