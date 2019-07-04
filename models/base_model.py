@@ -15,7 +15,7 @@ class BaseModel:
     attr3(updated_at): datetime instance is created and updated when changed
     """
     def __init__(self, *args, **kwargs):
-        """Initiliazes an instance"""
+        """Initiliazes an instance of BaseModel"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "updated_at" or key == "created_at":
