@@ -12,7 +12,7 @@ class TestBaseModelClass(unittest.TestCase):
     """This class allows for testing of BaseModel class"""
 
     def setUp(self):
-        """Sets up BaseModel instance for testing"""
+        """Sets up BaseModel for testing"""
         self.base1 = BaseModel()
 
     def tearDown(self):
@@ -124,6 +124,14 @@ class TestBaseModelClass(unittest.TestCase):
         base1.save()
         newtime = base1.updated_at
         self.assertNotEqual(oldtime, newtime)
+
+    def test_updated_atviasavemethod(self):
+        """This function tests that updated_at is updated via save method"""
+        b1 = BaseModel()
+        b1.save()
+        self.assertEqual(type(b1.updated_at), type(datetime.now()))
+        self.assertEqual(type(b1.updated_at), datetime)
+        self.assertTrue(hasattr(b1, "updated_at"))
 
     def test_todictreturntype(self):
         """This function tests the todict method"""
