@@ -10,7 +10,7 @@ class TestAmenityClass(unittest.TestCase):
         '''This class allows for testing of Amenity class'''
 
         def setUp(self):
-                '''Sets up Amenity for testing'''
+                '''Sets up Amenity instance for testing'''
                 self.amenity1 = Amenity()
 
         def tearDown(self):
@@ -18,7 +18,7 @@ class TestAmenityClass(unittest.TestCase):
                 pass
 
         def test_type(self):
-                '''Tests type of Amenity'''
+                '''Tests type of Amenity instance'''
                 a1 = Amenity()
                 self.assertEqual(type(a1), Amenity)
 
