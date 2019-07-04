@@ -26,7 +26,7 @@ COMMAMND | DESCRIPTION
 ```(hbnb) show <class> <id>``` | Show information about an object
 ```(hbnb) destroy <class> <id>``` | Destroy object
 ```(hbnb) all <class>``` | Show all instances of a class
-```(hbnb) update <class> <id> <attribute name> <attribute value> | Creates or updates the attribute of a class
+```(hbnb) update <class> <id> <attribute name> <attribute value>``` | Creates or updates the attribute of a class
 
 
 The commands create, show, destroy, all, and update can also be ran with the following syntax:
