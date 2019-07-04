@@ -10,7 +10,7 @@ class TestplaceClass(unittest.TestCase):
         '''This class allows for testing of place class'''
 
         def setUp(self):
-                '''Sets up place for testing'''
+                '''Sets up place instance for testing'''
                 self.place1 = Place()
 
         def tearDown(self):
