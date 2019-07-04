@@ -23,7 +23,7 @@ class TestAmenityClass(unittest.TestCase):
                 self.assertEqual(type(a1), Amenity)
 
         def test_instance(self):
-                '''Tests if instance of BaseModel'''
+                '''Tests if amenity instance inherits from BaseModel'''
                 self.assertIsInstance(self.amenity1, BaseModel)
 
         def test_amenity_id(self):
