@@ -12,7 +12,7 @@ class TestBaseModelClass(unittest.TestCase):
     """This class allows for testing of BaseModel class"""
 
     def setUp(self):
-        """Sets up BaseModel for testing"""
+        """Sets up BaseModel instance for testing"""
         self.base1 = BaseModel()
 
     def tearDown(self):
