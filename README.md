@@ -1,3 +1,4 @@
+
 # 0x00. AirBnB clone - The Console
 ## The Holberton B&B
 
@@ -29,7 +30,7 @@ COMMAMND | DESCRIPTION
 ```(hbnb) update <class> <id> <attribute name> <attribute value>``` | Creates or updates the attribute of a class
 
 
-The commands create, show, destroy, all, and update can also be ran with the following syntax:
+The commands create, show, destroy, all, and update can also be ran with the following syntax:  
 ```<class>.<command>(<optional id>, <optional arguments>)```
 
 Running the update() function to create a new instance of 'middle_name' for the User class this way would look like this:
@@ -74,7 +75,7 @@ FILE | DESCRIPTION | ATTRIBUTES
 ## Built With
 * [Python 3.4.3](https://www.python.org/download/releases/3.0/) - Python3 Language
 * [PEP8 1.7](https://www.python.org/dev/peps/pep-0008/) - PEP8 style guide
-* [Ubuntu 14.04 LTS](http://releases.ubuntu.com/14.04/) - Compiled on
+* [Ubuntu 14.04 LTS](http://releases.ubuntu.com/14.04/) - OS used
 
 
 ### Authors

@@ -45,7 +45,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_show(self, arg):
-        """prints the string rep of instance based on class name and id"""
+        """prints the string representation of the instance
+        based on class name and id"""
         if arg == "":
             print("** class name missing **")
             return
