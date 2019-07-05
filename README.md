@@ -36,7 +36,7 @@ Running the ```update()``` function to create a new instance of 'middle_name' fo
 ```update.User("123-123-123-123", middle_name, Davmas)```
 
 #### Non-interactive Mode
-From a bash-like command line echo "<command>" and pipe to ./console.py
+From a bash-like command line echo ```"<command>"``` and pipe to ./console.py
 
 ```bash
 $ echo "help" | ./console.py
