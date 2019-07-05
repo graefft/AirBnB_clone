@@ -121,9 +121,14 @@ class TestBaseModelClass(unittest.TestCase):
         base1 = BaseModel()
         oldtime = base1.updated_at
         sleep(.5)
+        base1.id = 98
         base1.save()
         newtime = base1.updated_at
+        self.assertTrue(hasattr(base1, "id"))
+        self.assertTrue(base1.id == 98)
         self.assertNotEqual(oldtime, newtime)
+        with open("file.json", "r", encoding="utf-8") as content:
+            self.assertTrue("\"id\": 98" in content.read())
 
     def test_updated_atviasavemethod(self):
         """This function tests that updated_at is updated via save method"""
