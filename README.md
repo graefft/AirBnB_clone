@@ -30,7 +30,7 @@ COMMAND | DESCRIPTION
 ```(hbnb) update <class> <id> <attribute name> <attribute value>``` | Creates or updates the attribute of a class
 
 
-<<<<<<< HEAD
+
 The commands create, show, destroy, all, and update can also be ran with the following syntax:  
 ```<class>.<command>(<optional id>, <optional arguments>)```
 
