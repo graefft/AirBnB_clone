@@ -3,12 +3,12 @@
 ## The Holberton B&B
 
 ### About
-Write command interpreter to manage AirBnb objects
-* put in place parent class (`BaseModel`) to take care of initialization, serialization, and deserialization of future instances
-* create simple flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file
-* create all classes used for AirBnb (`User, State, City, Place…`) that inherit from BaseModel
-* create the first abstracted storage engine of the project: File storage
-* create all unittests to validate all our classes and storage engine
+Command interpreter to manage AirBnb objects
+* Parent class (`BaseModel`) to take care of initialization, serialization, and deserialization of future instances
+* Flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file
+* Creates all classes used for AirBnb (`User, State, City, Place…`) that inherit from BaseModel
+* Creates the first abstracted storage engine of the project: File storage
+* Creates all unittests to validate all our classes and storage engine
 
 
 ## Usage
@@ -18,7 +18,7 @@ Like the Unix shell, the HBnB console works in both interactive and non-interact
 #### Interactive Mode
 To begin interactive mode, run ```./console.py``` from the command line
 
-COMMAMND | DESCRIPTION
+COMMAND | DESCRIPTION
 ----|----
 ```(hbnb) quit``` | Quits console
 ```(hbnb) EOF``` | Quits console via EOF
@@ -30,13 +30,15 @@ COMMAMND | DESCRIPTION
 ```(hbnb) update <class> <id> <attribute name> <attribute value>``` | Creates or updates the attribute of a class
 
 
+<<<<<<< HEAD
 The commands create, show, destroy, all, and update can also be ran with the following syntax:  
 ```<class>.<command>(<optional id>, <optional arguments>)```
 
-Running the update() function to create a new instance of 'middle_name' for the User class this way would look like this:
+Running the ```update()``` function to create a new instance of 'middle_name' for the User class this way would look like this: 
 ```update.User("123-123-123-123", middle_name, Davmas)```
 
 #### Non-interactive Mode
+From a bash-like command line echo ```"<command>"``` and pipe to ./console.py
 
 ```bash
 $ echo "help" | ./console.py
@@ -49,16 +51,14 @@ EOF  all  count  create  destroy  help  quit  show  update
 
 
 ## Running the Tests
-All tests are located in the [tests](./tests/) folder.
-
 To run unittests for this program, cd into root directory and run the following command:
 `python3 -m unittest discover tests`
 
-Tests can be modified in the tests/ directory
+Tests can be modified in the [tests](./tests/) directory
 
 
 ## Files Used in this Project
-Models for all classes are located in the [models](./models/) folder.
+Models for all classes are located in the [models](./models/) directory.
 
 FILE | DESCRIPTION | ATTRIBUTES
 ----|----|----
