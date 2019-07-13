@@ -5,6 +5,7 @@ import models
 from datetime import datetime
 import unittest
 import os
+from time import sleep
 
 
 class TestBaseModelClass(unittest.TestCase):
@@ -13,11 +14,9 @@ class TestBaseModelClass(unittest.TestCase):
     def setUp(self):
         """Sets up BaseModel for testing"""
         self.base1 = BaseModel()
-        if os.path.exists("file.json"):
-            os.remove("file.json")
 
     def tearDown(self):
-        """Tears down BaseModel testing"""
+        """Tears down BaseModel testing by removing file"""
         if os.path.exists("file.json"):
             os.remove("file.json")
 
@@ -121,9 +120,23 @@ class TestBaseModelClass(unittest.TestCase):
         """This function tests the save method"""
         base1 = BaseModel()
         oldtime = base1.updated_at
+        sleep(.5)
+        base1.id = 98
         base1.save()
         newtime = base1.updated_at
+        self.assertTrue(hasattr(base1, "id"))
+        self.assertTrue(base1.id == 98)
         self.assertNotEqual(oldtime, newtime)
+        with open("file.json", "r", encoding="utf-8") as content:
+            self.assertTrue("\"id\": 98" in content.read())
+
+    def test_updated_atviasavemethod(self):
+        """This function tests that updated_at is updated via save method"""
+        b1 = BaseModel()
+        b1.save()
+        self.assertEqual(type(b1.updated_at), type(datetime.now()))
+        self.assertEqual(type(b1.updated_at), datetime)
+        self.assertTrue(hasattr(b1, "updated_at"))
 
     def test_todictreturntype(self):
         """This function tests the todict method"""
@@ -187,6 +200,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(b1.created_at, b2.created_at)
         self.assertEqual(b1.updated_at, b2.updated_at)
         self.assertNotEqual(b1, b2)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -15,7 +15,7 @@ class BaseModel:
     attr3(updated_at): datetime instance is created and updated when changed
     """
     def __init__(self, *args, **kwargs):
-        """Initiliazes an instance"""
+        """Initiliazes an instance of BaseModel"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "updated_at" or key == "created_at":
@@ -25,8 +25,8 @@ class BaseModel:
                     setattr(self, key, value)
         else:
             self.id = str(uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = datetime.utcnow()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class BaseModel:
 
     def save(self):
         """updates public instance attr updated_at with current datetime"""
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):

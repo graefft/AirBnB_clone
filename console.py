@@ -45,13 +45,14 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_show(self, arg):
-        """prints the string rep of instance based on class name and id"""
+        """prints the string representation of the instance
+        based on class name and id"""
         if arg == "":
             print("** class name missing **")
             return
         arglist = parse(arg)
         try:
-            b1 = eval(arglist[0])
+            b1 = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -73,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
             return
         arglist = parse(arg)
         try:
-            b1 = eval(arglist[0])
+            b1 = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -103,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
             print(objlist)
             return
         try:
-            model = eval(arglist[0])
+            model = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -121,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         try:
-            model = eval(arglist[0])
+            model = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -136,7 +137,6 @@ class HBNBCommand(cmd.Cmd):
         if flag == 0:
             print("** no instance found **")
             return
-
         if len(arglist) == 2:
             print("** attribute name missing **")
             return
@@ -145,26 +145,18 @@ class HBNBCommand(cmd.Cmd):
             return
         objectdict = storage.all()
         flag = 0
-        argument = []
-        for word in arglist[2]:
-            argument.append(str(word))
-        arg_2 = ''.join(argument)
         for key, value in objectdict.items():
             if key == "{}.{}".format(arglist[0], arglist[1]):
                 if isint(arglist[3]) is True:
-                    setattr(value, arg_2, int(arglist[3]))
+                    setattr(value, arglist[2], int(arglist[3]))
                     flag = 1
                 elif isfloat(arglist[3]) is True:
-                    setattr(value, arg_2, float(arglist[3]))
+                    setattr(value, arglist[2], float(arglist[3]))
                     flag = 1
                 else:
-                    argument = []
-                    for item in arglist[3]:
-                        argument.append(str(item))
-                    arg_3 = ''.join(argument)
-                    setattr(value, arg_2, arg_3)
+                    setattr(value, arglist[2], arglist[3])
                     flag = 1
-                storage.save()
+        storage.save()
 
     def do_count(self, arg):
         '''Counts number of instances in a class'''
@@ -173,7 +165,7 @@ class HBNBCommand(cmd.Cmd):
             return
         arglist = parse(arg)
         try:
-            b1 = eval(arglist[0])
+            b1 = eval(arglist[0])()
         except:
             print("** class doesn't exist **")
             return
@@ -206,7 +198,11 @@ class HBNBCommand(cmd.Cmd):
             par = re.search(r"\((.*?)\)", cl_comm[1])
             if par:
                 command = [cl_comm[1][:par.span()[0]], par.group()[1:-1]]
-                if command[0] in arg_dict.keys():
+                if command[0] == "update":
+                    no_comma = command[1].replace(",", "")
+                    call = "{} {}".format(cl_comm[0], no_comma)
+                    return arg_dict[command[0]](call)
+                elif command[0] in arg_dict.keys():
                     call = "{} {}".format(cl_comm[0], command[1])
                     return arg_dict[command[0]](call)
         print("*** Unknown syntax: {}".format(line))

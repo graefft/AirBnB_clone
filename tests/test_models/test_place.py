@@ -10,7 +10,7 @@ class TestplaceClass(unittest.TestCase):
         '''This class allows for testing of place class'''
 
         def setUp(self):
-                '''Sets up place for testing'''
+                '''Sets up place instance for testing'''
                 self.place1 = Place()
 
         def tearDown(self):
@@ -18,11 +18,11 @@ class TestplaceClass(unittest.TestCase):
                 pass
 
         def test_type(self):
-                '''Tests type of place'''
+                '''Tests type of Place instance'''
                 self.assertEqual(type(self.place1), Place)
 
         def test_instance(self):
-                '''Tests if instance of BaseModel'''
+                '''Tests if instance instance inherits from BaseModel'''
                 self.assertIsInstance(self.place1, BaseModel)
 
         def test_place_id(self):

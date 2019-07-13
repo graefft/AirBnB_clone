@@ -10,7 +10,7 @@ class TestStateClass(unittest.TestCase):
         '''This class allows for testing of State class'''
 
         def setUp(self):
-                '''Sets up State for testing'''
+                '''Sets up State instance for testing'''
                 self.state1 = State()
 
         def tearDown(self):
@@ -22,7 +22,7 @@ class TestStateClass(unittest.TestCase):
                 self.assertEqual(type(self.state1), State)
 
         def test_instance(self):
-                '''Tests if instance of BaseModel'''
+                '''Tests if instance inherits from BaseModel'''
                 self.assertIsInstance(self.state1, BaseModel)
 
         def test_state_id(self):
